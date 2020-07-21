@@ -1,16 +1,23 @@
-console.log(Dinos);
+const processJSON = function (response) {
+  console.log(response);
+  if (response.status === 200) {
+    return Promise.resolve(response);
+  }
+};
+const json = fetch('dino.json').then(processJSON);
+console.log(json);
 
 // Create Dino Constructor
-function Dino(species, img, fact) {
+function Dino(obj) {
   return {
-    species: this.species,
-    img: this.image,
-    fact: this.fact,
+    species: obj.species,
+    weight: obj.weight,
+    height: obj.height,
+    diet: obj.diet,
+    facts: [obj.where, obj.when, obj.fact],
   };
 }
 
-// Create Dino Objects
-const dino1 = new Dino('test', 'test', 'test');
 const dino2 = new Dino('test', 'test', 'test');
 const dino3 = new Dino('test', 'test', 'test');
 const dino4 = new Dino('test', 'test', 'test');
