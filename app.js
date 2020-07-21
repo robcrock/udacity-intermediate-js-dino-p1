@@ -1,3 +1,5 @@
+console.log(Dinos);
+
 // Create Dino Constructor
 function Dino(species, img, fact) {
   return {
@@ -42,23 +44,45 @@ const submit = function () {
 
 document.getElementById('btn').addEventListener('click', submit);
 
-// Create Dino Compare Method 1
+// Create Dino Compare Height
 // NOTE: Weight in JSON file is in lbs, height in inches.
-const compareWeight = function (hWeight, dWeight) {
+const compareHeight = function (hHeightFt, hHeightIn) {
+  const hTotalHeightInInches = hHeightFt / 12 + hHeightIn;
+  const dTotalHeightInInches = 10;
+
+  if (hTotalHeightInInches > dTotalHeightInInches) {
+    console.log('This dino is shorter than the human.');
+  } else if (hTotalHeightInInches < dTotalHeightInInches) {
+    console.log('This dino is taller than the human.');
+  } else console.log('This dino is the same height as the human.');
+};
+
+// Create Dino Compare Weight
+// NOTE: Weight in JSON file is in lbs, height in inches.
+const compareWeight = function (hWeight) {
+  const dWeight = hWeight; // REFACTOR
   const weightDiff = dWeight - hWeight;
 
   if (weightDiff > 0) {
     console.log(`This dino is ${weightDiff}lbs heavier`);
   } else if (weightDiff < 0) {
     console.log(`This dino is ${weightDiff}lbs lighter`);
-  } else console.log('The dino and the human are the same weight.');
+  } else {
+    console.log('The dino and the human are the same weight.');
+  }
 };
 
-// Create Dino Compare Method 2
+// Create Dino Compare Diet
 // NOTE: Weight in JSON file is in lbs, height in inches.
+const compareDiet = function (hDiet) {
+  const dDiet = 'Herbavor';
 
-// Create Dino Compare Method 3
-// NOTE: Weight in JSON file is in lbs, height in inches.
+  if (hDiet === dDiet) {
+    console.log('This dino and human have the same diet.');
+  } else {
+    console.log('This dino and human have different diets.');
+  }
+};
 
 // Generate Tiles for each Dino in Array
 
