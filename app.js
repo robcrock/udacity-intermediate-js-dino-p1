@@ -1,11 +1,12 @@
-const processJSON = function (response) {
-  console.log(response);
-  if (response.status === 200) {
-    return Promise.resolve(response);
-  }
-};
-const json = fetch('dino.json').then(processJSON);
-console.log(json);
+const processData = function (data) {
+  return data.Dinos;
+}
+
+let dinos = fetch('dino.json')
+  .then(response => response.json())
+  .then(data => data.Dinos) //.map(dino))
+
+console.log(dinos);
 
 // Create Dino Constructor
 function Dino(obj) {
@@ -17,6 +18,17 @@ function Dino(obj) {
     facts: [obj.where, obj.when, obj.fact],
   };
 }
+
+// Create Dino Constructor
+function Dino(species, img, fact) {
+  this.species = species;
+  this.image = img;
+  this.fact = fact;
+}
+
+// Create Dino Objects
+const dino = new Dino('Robert', 'hello', 'I have a new puppy.');
+//console.log(dino);
 
 const dino2 = new Dino('test', 'test', 'test');
 const dino3 = new Dino('test', 'test', 'test');
