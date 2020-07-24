@@ -1,13 +1,3 @@
-const processData = function (data) {
-  return data.Dinos;
-}
-
-let dinos = fetch('dino.json')
-  .then(response => response.json())
-  .then(data => data.Dinos) //.map(dino))
-
-console.log(dinos);
-
 // Create Dino Constructor
 function Dino(obj) {
   return {
@@ -18,6 +8,33 @@ function Dino(obj) {
     facts: [obj.where, obj.when, obj.fact],
   };
 }
+
+const processData = function (data) {
+
+  data.Dinos.forEach(dinoObj => {
+
+    let dinoArr = [];
+
+    dinoArr.push(Dino(dinoObj));
+
+    // let dinoObj = {
+    //   species: dino.species,
+    //   weight: dino.weight,
+    //   height: dino.height,
+    //   diet: dino.diet,
+    //   facts: [dino.where, dino.when, dino.fact],
+    // };
+
+    console.log(dinoArr);
+
+  })
+}
+
+let dinos = fetch('dino.json')
+  .then(response => response.json())
+  .then(processData)
+
+console.log(dinos);
 
 // Create Dino Constructor
 function Dino(species, img, fact) {
