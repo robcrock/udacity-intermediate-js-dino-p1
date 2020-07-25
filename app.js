@@ -1,5 +1,6 @@
 // Create Dino Constructor
 function Dino(obj) {
+
   return {
     species: obj.species,
     weight: obj.weight,
@@ -9,32 +10,32 @@ function Dino(obj) {
   };
 }
 
-const processData = function (data) {
+const processData = (data) => {
+  let dinoArr = [];
 
   data.Dinos.forEach(dinoObj => {
 
-    let dinoArr = [];
+    dinoObj = {
+      species: dinoObj.species,
+      weight: dinoObj.weight,
+      height: dinoObj.height,
+      diet: dinoObj.diet,
+      facts: [dinoObj.where, dinoObj.when, dinoObj.fact],
+    };
 
-    dinoArr.push(Dino(dinoObj));
-
-    // let dinoObj = {
-    //   species: dino.species,
-    //   weight: dino.weight,
-    //   height: dino.height,
-    //   diet: dino.diet,
-    //   facts: [dino.where, dino.when, dino.fact],
-    // };
-
-    console.log(dinoArr);
-
+    dinoArr.push(dinoObj);
   })
+  console.log(dinoArr);
+  return dinoArr;
 }
 
 let dinos = fetch('dino.json')
   .then(response => response.json())
   .then(processData)
 
-console.log(dinos);
+console.log(dinoArr);
+
+// console.log(dinos);
 
 // Create Dino Constructor
 function Dino(species, img, fact) {
