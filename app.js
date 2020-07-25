@@ -25,10 +25,11 @@ const processData = (data) => {
 
     dinoArr.push(dinoObj);
   })
-  console.log(dinoArr);
-  return dinoArr;
+  // console.log(dinoArr);
+  // return dinoArr;
 }
 
+let dinoArr = [];
 let dinos = fetch('dino.json')
   .then(response => response.json())
   .then(processData)
