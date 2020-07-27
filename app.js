@@ -1,6 +1,5 @@
 // Create Dino Constructor
-function Dino(obj) {
-
+const Dino = function (obj) {
   return {
     species: obj.species,
     weight: obj.weight,
@@ -8,54 +7,22 @@ function Dino(obj) {
     diet: obj.diet,
     facts: [obj.where, obj.when, obj.fact],
   };
-}
+};
 
-const processData = (data) => {
-  let dinoArr = [];
+const dinoArr = [];
 
+const processData = data => {
   data.Dinos.forEach(dinoObj => {
+    dinoArr.push(Dino(dinoObj));
+  });
+};
 
-    dinoObj = {
-      species: dinoObj.species,
-      weight: dinoObj.weight,
-      height: dinoObj.height,
-      diet: dinoObj.diet,
-      facts: [dinoObj.where, dinoObj.when, dinoObj.fact],
-    };
-
-    dinoArr.push(dinoObj);
-  })
-  // console.log(dinoArr);
-  // return dinoArr;
-}
-
-let dinoArr = [];
-let dinos = fetch('dino.json')
+// Process the dino data.
+fetch('dino.json')
   .then(response => response.json())
-  .then(processData)
+  .then(data => processData(data));
 
 console.log(dinoArr);
-
-// console.log(dinos);
-
-// Create Dino Constructor
-function Dino(species, img, fact) {
-  this.species = species;
-  this.image = img;
-  this.fact = fact;
-}
-
-// Create Dino Objects
-const dino = new Dino('Robert', 'hello', 'I have a new puppy.');
-//console.log(dino);
-
-const dino2 = new Dino('test', 'test', 'test');
-const dino3 = new Dino('test', 'test', 'test');
-const dino4 = new Dino('test', 'test', 'test');
-const dino5 = new Dino('test', 'test', 'test');
-const dino6 = new Dino('test', 'test', 'test');
-const dino7 = new Dino('test', 'test', 'test');
-const dino8 = new Dino('test', 'test', 'test');
 
 // Create Human Object
 const human = {
