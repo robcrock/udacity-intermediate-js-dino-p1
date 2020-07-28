@@ -9,20 +9,21 @@ const Dino = function (obj) {
   };
 };
 
-const dinoArr = [];
-
-const processData = data => {
-  data.Dinos.forEach(dinoObj => {
-    dinoArr.push(Dino(dinoObj));
-  });
+// const dinoArr = [];
+const fetchDinoData = function () {
+  fetch('dino.json')
+    .then(response => response.json())
+    .then(dinos => {
+      const output = [];
+      dinos.Dinos.forEach(dino => {
+        output.push(Dino(dino));
+      });
+      console.log(output);
+      document.getElementById('grid').innerHTML = output;
+    });
 };
 
-// Process the dino data.
-fetch('dino.json')
-  .then(response => response.json())
-  .then(data => processData(data));
-
-console.log(dinoArr);
+fetchDinoData();
 
 // Create Human Object
 const human = {
