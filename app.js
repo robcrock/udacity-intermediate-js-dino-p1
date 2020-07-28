@@ -14,16 +14,13 @@ const fetchDinoData = function () {
   fetch('dino.json')
     .then(response => response.json())
     .then(dinos => {
-      const output = '';
       const gridDiv = document.getElementById('grid');
       dinos.Dinos.forEach(dino => {
         const gridItem = document.createElement('div');
         const gridItemHtml = `<div class="grid-item">
             <img src="./images/${Dino(dino).species}.png">
-            <div class="container">
-                <h3><b>John Doe</b></h3>
-                <p>Architect & Engineer</p>
-            </div>
+            <h3>${Dino(dino).species}</h3>
+            <p>${Dino(dino).facts[0]}</p>
         </div>`;
         gridDiv.appendChild(gridItem).innerHTML = gridItemHtml;
       });
@@ -44,6 +41,10 @@ const human = {
 
 // Use IIFE to get human data from form
 const submit = function () {
+  // Remove the form when compare me is clicked
+  const formElem = document.getElementById('dino-compare');
+  formElem.style.display = 'none';
+
   const me = Object.create(human);
 
   me.name = document.getElementById('name').value;
