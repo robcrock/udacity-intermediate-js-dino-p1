@@ -9,26 +9,6 @@ const Dino = function (obj) {
   };
 };
 
-// const dinoArr = [];
-const fetchDinoData = function () {
-  fetch('dino.json')
-    .then(response => response.json())
-    .then(dinos => {
-      const gridDiv = document.getElementById('grid');
-      dinos.Dinos.forEach(dino => {
-        const gridItem = document.createElement('div');
-        const gridItemHtml = `<div class="grid-item">
-            <img src="./images/${Dino(dino).species}.png">
-            <h3>${Dino(dino).species}</h3>
-            <p>${Dino(dino).facts[0]}</p>
-        </div>`;
-        gridDiv.appendChild(gridItem).innerHTML = gridItemHtml;
-      });
-    });
-};
-
-fetchDinoData();
-
 // Create Human Object
 const human = {
   name: this.name,
@@ -41,7 +21,6 @@ const human = {
 
 // Use IIFE to get human data from form
 const submit = function () {
-  // Remove the form when compare me is clicked
   const formElem = document.getElementById('dino-compare');
   formElem.style.display = 'none';
 
@@ -53,10 +32,17 @@ const submit = function () {
   me.weight = document.getElementById('weight').value;
   me.diet = document.getElementById('diet').value;
 
+  const gridDiv = document.getElementById('grid');
+  const gridItem = document.createElement('div');
+  const gridItemHtml = `<div class="grid-item">
+      <img src="./images/human.png">
+      <h3>${me.name}</h3>
+      <p>Fun Fact</p>
+  </div>`;
+  gridDiv.appendChild(gridItem).innerHTML = gridItemHtml;
+  console.log(me);
   return me;
 };
-
-document.getElementById('btn').addEventListener('click', submit);
 
 // Create Dino Compare Height
 // NOTE: Weight in JSON file is in lbs, height in inches.
@@ -99,9 +85,27 @@ const compareDiet = function (hDiet) {
 };
 
 // Generate Tiles for each Dino in Array
+const fetchDinoData = function () {
+  fetch('dino.json')
+    .then(response => response.json())
+    .then(dinos => {
+      const gridDiv = document.getElementById('grid');
+      dinos.Dinos.forEach(dino => {
+        const gridItem = document.createElement('div');
+        const gridItemHtml = `<div class="grid-item">
+            <img src="./images/${Dino(dino).species}.png">
+            <h3>${Dino(dino).species}</h3>
+            <p>${Dino(dino).facts[0]}</p>
+        </div>`;
+        gridDiv.appendChild(gridItem).innerHTML = gridItemHtml;
+      });
+    });
+};
 
 // Add tiles to DOM
+fetchDinoData();
 
 // Remove form from screen
+document.getElementById('btn').addEventListener('click', submit);
 
 // On button click, prepare and display infographic
