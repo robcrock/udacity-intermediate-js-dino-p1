@@ -15,21 +15,18 @@ const fetchDinoData = function () {
     .then(response => response.json())
     .then(dinos => {
       const output = '';
+      const gridDiv = document.getElementById('grid');
       dinos.Dinos.forEach(dino => {
-        let grid-item =
-        `
-        <div class="grid-item">
+        const gridItem = document.createElement('div');
+        const gridItemHtml = `<div class="grid-item">
             <img src="./images/${Dino(dino).species}.png">
             <div class="container">
                 <h3><b>John Doe</b></h3>
                 <p>Architect & Engineer</p>
             </div>
-        </div>
-        `
-        output.push(Dino(dino));
+        </div>`;
+        gridDiv.appendChild(gridItem).innerHTML = gridItemHtml;
       });
-      console.log(output);
-      // document.getElementById('grid').innerHTML = output;
     });
 };
 
