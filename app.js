@@ -14,12 +14,22 @@ const fetchDinoData = function () {
   fetch('dino.json')
     .then(response => response.json())
     .then(dinos => {
-      const output = [];
+      const output = '';
       dinos.Dinos.forEach(dino => {
+        let grid-item =
+        `
+        <div class="grid-item">
+            <img src="./images/${Dino(dino).species}.png">
+            <div class="container">
+                <h3><b>John Doe</b></h3>
+                <p>Architect & Engineer</p>
+            </div>
+        </div>
+        `
         output.push(Dino(dino));
       });
       console.log(output);
-      document.getElementById('grid').innerHTML = output;
+      // document.getElementById('grid').innerHTML = output;
     });
 };
 
