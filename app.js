@@ -5,7 +5,9 @@ const Dino = function (obj) {
     weight: obj.weight,
     height: obj.height,
     diet: obj.diet,
-    facts: [obj.where, obj.when, obj.fact],
+    where: obj.where,
+    when: obj.when,
+    fact: obj.fact,
   };
 };
 
@@ -34,7 +36,6 @@ const submit = function () {
   const gridItemHtml = `<div class="grid-item">
       <img src="./images/human.png">
       <h3>${me.name}</h3>
-      <p>Fun Fact</p>
   </div>`;
   // gridDiv.appendChild(gridItem).innerHTML = gridItemHtml;
   // console.log(me);
@@ -92,9 +93,10 @@ const fetchDinoData = function () {
         gridItemsHtml.push(`<div class="grid-item">
         <img src="./images/${Dino(dino).species}.png">
         <h3>${Dino(dino).species}</h3>
-        <p>${Dino(dino).facts[0]}</p>
+        <p>${Dino(dino).fact}</p>
         </div>`);
       });
+      // Insert the Humam grid item.
       gridItemsHtml.splice(4, 0, submit());
       // Select the main grid div from the HTML
       const gridDiv = document.getElementById('grid');
