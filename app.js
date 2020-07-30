@@ -91,18 +91,26 @@ const fetchDinoData = function () {
       const gridItemDinos = [];
 
       // Push each div into the array
-      dinos.Dinos.forEach(dino => {
+      dinos.Dinos.forEach((dino, i) => {
 
         const thisDino = Dino(dino);
-        thisDino.fact.push(compareHeight(human.heightInFeet, human.heightInInches, thisDino.height), compareWeight(human.weight, thisDino.weight), compareDiet(human.diet, thisDino.diet))
+        if (i !== 7) {
+          thisDino.fact.push(compareHeight(human.heightInFeet, human.heightInInches, thisDino.height), compareWeight(human.weight, thisDino.weight), compareDiet(human.diet, thisDino.diet))
+        } else {
+          thisDino.fact.push('All birds are living dinosaurs.');
+        }
 
-        console.log(thisDino);
-
+        let factI = 0;
+        if (i !== 7) {
+          factI = Math.floor(3 * Math.random());
+        } else {
+          factI = 0;
+        }
 
         gridItemDinos.push(`<div class="grid-item">
         <img src="./images/${thisDino.species}.png">
         <h3>${thisDino.species}</h3>
-        <p>${thisDino.fact}</p>
+        <p>${thisDino.fact[factI]}</p>
         </div>`);
       });
 
