@@ -24,6 +24,7 @@ const human = {
 
 // Use IIFE to get human data from form
 const Human = function () {
+
   const me = Object.create(human);
 
   me.name = document.getElementById('name').value;
@@ -33,10 +34,7 @@ const Human = function () {
   me.diet = document.getElementById('diet').value;
 
   return me;
-  // const gridDiv = document.getElementById('grid');
-  // const gridItem = document.createElement('div');
-  // gridDiv.appendChild(gridItem).innerHTML = gridItemHtml;
-  // console.log(me);
+
 };
 
 // Create Dino Compare Height
@@ -75,13 +73,13 @@ const compareDiet = function (hDiet, dDiet) {
 
 // Generate Tiles for each Dino in Array
 const fetchDinoData = function () {
-  const human = Human();
+  const humanTile = Human();
 
   const gridItemHuman =
     `<div class="grid-item">
-      <img src="./images/human.png">
-      <h3>${human.name}</h3>
-  </div>`;
+        <img src="./images/human.png">
+        <h3>${humanTile.name}</h3>
+    </div>`;
 
   fetch('dino.json')
     .then(response => response.json())
@@ -94,8 +92,13 @@ const fetchDinoData = function () {
       dinos.Dinos.forEach((dino, i) => {
 
         const thisDino = Dino(dino);
+
         if (i !== 7) {
-          thisDino.fact.push(compareHeight(human.heightInFeet, human.heightInInches, thisDino.height), compareWeight(human.weight, thisDino.weight), compareDiet(human.diet, thisDino.diet))
+          thisDino.fact.push(
+            compareHeight(humanTile.heightInFeet, humanTile.heightInInches, thisDino.height),
+            compareWeight(humanTile.weight, thisDino.weight),
+            compareDiet(humanTile.diet, thisDino.diet)
+          )
         } else {
           thisDino.fact.push('All birds are living dinosaurs.');
         }
@@ -107,11 +110,14 @@ const fetchDinoData = function () {
           factI = 0;
         }
 
-        gridItemDinos.push(`<div class="grid-item">
-        <img src="./images/${thisDino.species}.png">
-        <h3>${thisDino.species}</h3>
-        <p>${thisDino.fact[factI]}</p>
-        </div>`);
+        gridItemDinos.push(
+          `<div class="grid-item">
+            <img src="./images/${thisDino.species}.png">
+            <h3>${thisDino.species}</h3>
+            <p>${thisDino.fact[factI]}</p>
+          </div>`
+        );
+
       });
 
       // Insert the Humam grid item.
@@ -119,20 +125,20 @@ const fetchDinoData = function () {
 
       // Select the main grid div from the HTML
       const gridDiv = document.getElementById('grid');
+
       gridItemDinos.forEach((item, i) => {
+
         const gridItem = document.createElement('div');
+
         gridDiv.appendChild(gridItem).innerHTML = gridItemDinos[i];
+
       });
-      console.log(gridItemDinos);
+
       const formElem = document.getElementById('dino-compare');
+
       formElem.style.display = 'none';
     });
 };
 
-// Add tiles to DOM
-// fetchDinoData();
-
 // Remove form from screen
 document.getElementById('btn').addEventListener('click', fetchDinoData);
-
-// On button click, prepare and display infographic
