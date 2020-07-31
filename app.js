@@ -1,39 +1,6 @@
 /* eslint-disable prettier/prettier */
-// Create Dino Constructor
-const Dino = function (species, weight, height, diet, where, when, fact) {
-  this.species = species;
-  this.weight = weight;
-  this.height = height;
-  this.diet = diet;
-  this.where = where;
-  this.when = when;
-  this.facts = [this.diet, this.where, this.when, fact];
-};
 
-// Create Human Object
-const human = {
-  name: this.name,
-  heightInFeet: this.heightInFeet,
-  hrightInInches: this.heightInInches,
-  height: `${this.feet}ft and ${this.inches} inches`,
-  weight: this.weight,
-  diet: this.diet,
-};
-
-// Use IIFE to get human data from form
-const Human = function () {
-
-  const me = Object.create(human);
-
-  me.name = document.getElementById('name').value;
-  me.heightInFeet = document.getElementById('feet').value;
-  me.heightInInches = document.getElementById('inches').value;
-  me.weight = document.getElementById('weight').value;
-  me.diet = document.getElementById('diet').value;
-
-  return me;
-
-};
+// Create comparison methods
 
 // Create Dino Compare Height
 // NOTE: Weight in JSON file is in lbs, height in inches.
@@ -69,83 +36,145 @@ const compareDiet = function (hDiet, dDiet) {
   } return 'This dino and human have different diets.';
 };
 
+// Create Dino Constructor
+const Dino = function (species, weight, height, diet, where, when, fact) {
+  this.species = species;
+  this.weight = weight;
+  this.height = height;
+  this.diet = diet;
+  this.where = where;
+  this.when = when;
+  this.facts = [this.diet, this.where, this.when, fact];
+};
+
+const createDinosItems = function (arrayOfObjs, humanItem) {
+  // Create the array of grid items.
+  const dinoItems = [];
+
+  // Push each div into the array
+  arrayOfObjs.forEach((dino, i) => {
+
+    const thisDino = new Dino(
+      dino.species,
+      dino.weight,
+      dino.height,
+      dino.diet,
+      dino.where,
+      dino.when,
+      dino.fact
+    );
+
+    if (i !== 7) {
+      thisDino.facts.push(
+        compareHeight(humanItem.heightInFeet, humanItem.heightInInches, thisDino.height),
+        compareWeight(humanItem.weight, thisDino.weight),
+        compareDiet(humanItem.diet, thisDino.diet)
+      )
+    }
+
+    dinoItems.push(thisDino);
+
+  });
+
+  return dinoItems;
+}
+
+// Create Human Object
+const Human = function (name, feet, inches, weight, diet) {
+  this.name = name;
+  this.heightInFeet = feet;
+  this.heightInInches = inches;
+  this.height = `${feet}ft and ${inches} inches`;
+  this.weight = weight;
+  this.diet = diet;
+};
+
+const createHumanItem = function () {
+  return new Human(
+    document.getElementById('name').value,
+    document.getElementById('feet').value,
+    document.getElementById('inches').value,
+    document.getElementById('weight').value,
+    document.getElementById('diet').value
+  )
+}
+
+// Create the grid elements
+const createInnerHtml = function (item, i) {
+
+  let factIndex = 0;
+  if (i !== 8) {
+    factIndex = Math.floor(6 * Math.random());
+  } else {
+    factIndex = 3;
+  }
+
+  // Conditionally return the appropriate element.
+  let element = '';
+  if (i === 4) {
+    const humanElement =
+      `<div class="grid-item">
+      <img src="./images/human.png">
+      <h3>${item.name}</h3>
+    </div>`;
+
+    element = humanElement;
+  } else {
+    const dinoElement =
+      `<div class="grid-item">
+      <img src="./images/${item.species}.png">
+      <h3>${item.species}</h3>
+      <p>${item.facts[factIndex]}</p>
+    </div>`;
+
+    element = dinoElement;
+  }
+
+  return element;
+
+}
+
+const insertGridElement = function (innerHtml, targetElem) {
+
+  const gridItemHtml = document.createElement('div');
+
+  targetElem.appendChild(gridItemHtml).innerHTML = innerHtml;
+
+};
+
 // Generate Tiles for each Dino in Array
 const fetchDinoData = function () {
-  const humanTile = Human();
-
-  const gridItemHuman =
-    `<div class="grid-item">
-        <img src="./images/human.png">
-        <h3>${humanTile.name}</h3>
-    </div>`;
 
   fetch('dino.json')
     .then(response => response.json())
     .then(dinos => {
 
-      // Create the array of grid items.
-      const gridItemDinos = [];
-
-      // Push each div into the array
-      dinos.Dinos.forEach((dino, i) => {
-
-        const thisDino = new Dino(
-          dino.species,
-          dino.weight,
-          dino.height,
-          dino.diet,
-          dino.where,
-          dino.when,
-          dino.fact
-        );
-
-        console.log(thisDino);
-
-        if (i !== 7) {
-          thisDino.facts.push(
-            compareHeight(humanTile.heightInFeet, humanTile.heightInInches, thisDino.height),
-            compareWeight(humanTile.weight, thisDino.weight),
-            compareDiet(humanTile.diet, thisDino.diet)
-          )
-        }
-
-        let factI = 0;
-        if (i !== 7) {
-          factI = Math.floor(6 * Math.random());
-        } else {
-          factI = 0;
-        }
-
-        console.log(thisDino.species, thisDino.facts[3]);
-
-        gridItemDinos.push(
-          `<div class="grid-item">
-            <img src="./images/${thisDino.species}.png">
-            <h3>${thisDino.species}</h3>
-            <p>${factI !== 0 ? thisDino.facts[factI] : thisDino.facts[3]}</p>
-          </div>`
-        );
-
-      });
+      // Create grid items
+      const humanItem = createHumanItem();
+      const dinoItems = createDinosItems(dinos.Dinos, humanItem);
 
       // Insert the Humam grid item.
-      gridItemDinos.splice(4, 0, gridItemHuman);
+      dinoItems.splice(4, 0, humanItem);
+
+      const gridHtml = [];
+      dinoItems.forEach((item, i) => {
+        gridHtml.push(createInnerHtml(item, i));
+      });
+      console.log(gridHtml);
 
       // Select the main grid div from the HTML
       const gridDiv = document.getElementById('grid');
 
-      gridItemDinos.forEach((item, i) => {
-
-        const gridItem = document.createElement('div');
-
-        gridDiv.appendChild(gridItem).innerHTML = gridItemDinos[i];
-
+      gridHtml.forEach(html => {
+        insertGridElement(html, gridDiv);
       });
 
       const formElem = document.getElementById('dino-compare');
-
       formElem.style.display = 'none';
+
     });
+
+
 };
 
 // Remove form from screen
