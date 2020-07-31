@@ -1,15 +1,13 @@
 /* eslint-disable prettier/prettier */
 // Create Dino Constructor
-const Dino = function (obj) {
-  return {
-    species: obj.species,
-    weight: obj.weight,
-    height: obj.height,
-    diet: obj.diet,
-    where: obj.where,
-    when: obj.when,
-    fact: [],
-  };
+const Dino = function (species, weight, height, diet, where, when, fact) {
+  this.species = species;
+  this.weight = weight;
+  this.height = height;
+  this.diet = diet;
+  this.where = where;
+  this.when = when;
+  this.facts = [this.diet, this.where, this.when, fact];
 };
 
 // Create Human Object
@@ -91,30 +89,40 @@ const fetchDinoData = function () {
       // Push each div into the array
       dinos.Dinos.forEach((dino, i) => {
 
-        const thisDino = Dino(dino);
+        const thisDino = new Dino(
+          dino.species,
+          dino.weight,
+          dino.height,
+          dino.diet,
+          dino.where,
+          dino.when,
+          dino.fact
+        );
+
+        console.log(thisDino);
 
         if (i !== 7) {
-          thisDino.fact.push(
+          thisDino.facts.push(
             compareHeight(humanTile.heightInFeet, humanTile.heightInInches, thisDino.height),
             compareWeight(humanTile.weight, thisDino.weight),
             compareDiet(humanTile.diet, thisDino.diet)
           )
-        } else {
-          thisDino.fact.push('All birds are living dinosaurs.');
         }
 
         let factI = 0;
         if (i !== 7) {
-          factI = Math.floor(3 * Math.random());
+          factI = Math.floor(6 * Math.random());
         } else {
           factI = 0;
         }
+
+        console.log(thisDino.species, thisDino.facts[3]);
 
         gridItemDinos.push(
           `<div class="grid-item">
             <img src="./images/${thisDino.species}.png">
             <h3>${thisDino.species}</h3>
-            <p>${thisDino.fact[factI]}</p>
+            <p>${factI !== 0 ? thisDino.facts[factI] : thisDino.facts[3]}</p>
           </div>`
         );
 
