@@ -48,11 +48,8 @@ const Dino = function (species, weight, height, diet, where, when, fact) {
 };
 
 const createDinosItems = function (arrayOfObjs, humanItem) {
-  // Create the array of grid items.
-  const dinoItems = [];
-
   // Push each div into the array
-  arrayOfObjs.forEach((dino, i) => {
+  const dinoItems = arrayOfObjs.map((dino, i) => {
 
     const thisDino = new Dino(
       dino.species,
@@ -72,7 +69,7 @@ const createDinosItems = function (arrayOfObjs, humanItem) {
       )
     }
 
-    dinoItems.push(thisDino);
+    return thisDino
 
   });
 
@@ -156,11 +153,7 @@ const fetchDinoData = function () {
       // Insert the Humam grid item.
       dinoItems.splice(4, 0, humanItem);
 
-      const gridHtml = [];
-      dinoItems.forEach((item, i) => {
-        gridHtml.push(createInnerHtml(item, i));
-      });
-      console.log(gridHtml);
+      const gridHtml = dinoItems.map(createInnerHtml);
 
       // Select the main grid div from the HTML
       const gridDiv = document.getElementById('grid');
@@ -173,7 +166,6 @@ const fetchDinoData = function () {
       formElem.style.display = 'none';
 
     });
-
 
 };
 
